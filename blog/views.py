@@ -22,7 +22,7 @@ class BlogView(APIView):
 
 
 
-# Asynchronous View
+# View heavy task
 class BlogAsyncView(APIView):
 
     # Async function
@@ -38,6 +38,27 @@ class BlogAsyncView(APIView):
         data['type'] = "Async"
         data['total_time'] = total_time
         return Response(data,  status=status.HTTP_200_OK)
+
+
+# # View heavy task (Param)
+class BlogAsyncParamView(APIView):
+
+    # Async function
+    def get(self, request, request_time: int, format=None):
+        data = {}
+
+        start_time = time.time()
+
+        # Heavy funtion
+        mock_heavy_function(request_time)
+        total_time = (time.time() - start_time)
+
+        data['name'] = "Divine"
+        data['type'] = "Async"
+        data['request_time'] = request_time
+        data['total_time'] = total_time
+        return Response(data,  status=status.HTTP_200_OK)
+
 
 
 
